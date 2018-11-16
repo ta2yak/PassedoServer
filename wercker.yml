@@ -1,0 +1,20 @@
+box: node:boron
+
+build:
+  steps:
+    - npm-install
+    - script:
+        name: run npm build script
+        code: npm run build
+    - script:
+        name: install functions dependencies
+        code: |
+          cd functions
+          npm install
+          cd ..
+deploy:
+  box: devillex/docker-firebase
+  steps:
+    - devillex/firebase-deploy@1.1.0:
+        project: $FIREBASE_PROJECT_NAME
+        token: $FIREBASE_TOKEN
