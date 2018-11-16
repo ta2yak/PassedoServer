@@ -1,0 +1,20 @@
+{
+  "name": "passedoserver",
+  "version": "1.0.0",
+  "description": "Sync and Web UI for Passedo",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 0",
+    "test": "echo 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ta2yak/PassedoServer.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ta2yak/PassedoServer/issues"
+  },
+  "homepage": "https://github.com/ta2yak/PassedoServer#readme"
+}
