@@ -18,7 +18,9 @@ build:
         name: install web dependencies and build
         code: |
           cd web
+          export NODE_ENV="development"
           npm install
+          export NODE_ENV="production"
           npm run build
           cd ..
 deploy:
