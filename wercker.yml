@@ -1,8 +1,13 @@
-box: node:boron
+box: nodesource/trusty
 
 build:
   steps:
-    - build
+    - script:
+        name: echo nodejs information
+        code: |
+          echo "node version $(node -v) running"
+          echo "npm version $(npm -v) running"
+    - npm-install
     - script:
         name: install functions dependencies and build
         code: |
