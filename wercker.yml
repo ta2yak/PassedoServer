@@ -2,15 +2,19 @@ box: node:boron
 
 build:
   steps:
-    - npm-install
+    - build
     - script:
-        name: run npm build script
-        code: npm run build
-    - script:
-        name: install functions dependencies
+        name: install functions dependencies and build
         code: |
           cd functions
           npm install
+          cd ..
+    - script:
+        name: install web dependencies and build
+        code: |
+          cd web
+          npm install
+          npm run build
           cd ..
 deploy:
   box: devillex/docker-firebase
