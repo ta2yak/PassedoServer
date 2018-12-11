@@ -82,9 +82,11 @@
     methods: {
       getTotalTime () {
         let seconds = 0
-        this.todo.records.forEach(record => {
-          seconds += moment(record.end).diff(moment(record.start), 'seconds')
-        })
+        if (this.todo.records) {
+          this.todo.records.forEach(record => {
+            seconds += moment(record.end).diff(moment(record.start), 'seconds')
+          })
+        }
 
         let converter = new Date(null)
         converter.setSeconds(seconds)

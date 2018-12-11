@@ -10,9 +10,8 @@ module.exports = functions.https
     }
 
     let uid = context.auth.uid
-    admin.database().ref('users/' + uid).set(data).catch((error) => {
-        let errorMessage = error.message
-        throw new functions.https.HttpsError('system error', errorMessage);
+    return admin.database().ref('users/' + uid).once('value').then((snapshot) => {
+        return snapshot.val()
     })
 
 });

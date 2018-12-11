@@ -14,7 +14,9 @@ const mutations = {
   STARTUP (state) { // for Version up data maintenance
     console.log('Welcome to Passedo')
     // Add Records ID
+    state.tasks = state.tasks || []
     state.tasks.forEach(task => {
+      task.records = task.records || []
       task.records.forEach(record => {
         if (!record.id) {
           record.id = uuidv4()
@@ -26,8 +28,8 @@ const mutations = {
     state.lastSynced = moment().valueOf()
   },
   ON_SYNC_TODO (state, payload) {
-    if (!state.lastSynced || state.lastSynced < payload.lastSynced) {
-      state.lastSynced = payload.lastSynced
+    if (!state.lastSynced || !payload.lastSynced || state.lastSynced < payload.lastSynced) {
+      state.lastSynced = payload.lastSynced || moment().valueOf()
       state.tasks = payload.tasks
       state.filter = payload.filter
     }
@@ -160,7 +162,7 @@ const actions = {
   sync ({dispatch, commit, state}) {
     let syncFunction = firebase.functions().httpsCallable('Sync')
     syncFunction(state).then((result) => {
-      console.log(result)
+      console.log('Pushed my state')
     }).catch((error) => {
       console.log(error)
     })
@@ -169,6 +171,8 @@ const actions = {
     let currentUser = firebase.auth().currentUser
     if (currentUser) {
       firebase.database().ref('users/' + currentUser.uid).on('value', (snapshot) => {
+        alert('ON_SYNC_TODO')
+        alert(snapshot.val())
         commit('ON_SYNC_TODO', snapshot.val())
       }).catch((error) => {
         let errorMessage = error.message
